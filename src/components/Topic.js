@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
-import { Box, Heading, VStack, Button, Input, FormControl, FormLabel } from '@chakra-ui/react';
+import {
+    Box,
+    Heading,
+    VStack,
+    Button,
+    Input,
+    FormControl,
+    FormLabel,
+    Text,
+} from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
 
 const Topic = () => {
     const [topics, setTopics] = useState(['Topic 1', 'Topic 2', 'Topic 3']);
     const [newTopic, setNewTopic] = useState('');
+    const [isEditing, setIsEditing] = useState([]);
     const history = useHistory();
 
     const handleAddTopic = () => {
@@ -14,16 +24,23 @@ const Topic = () => {
         }
     };
 
-    const handleEditTopic = (index, newValue) => {
+    const handleEditTopic = (index) => {
+        setIsEditing([...isEditing, index]);
+        setNewTopic(topics[index]);
+    };
+
+    const handleSaveTopic = (index, newValue) => {
         const newTopics = [...topics];
         newTopics[index] = newValue;
         setTopics(newTopics);
+        setIsEditing(isEditing.filter((i) => i !== index));
     };
 
     const handleDeleteTopic = (index) => {
         const newTopics = [...topics];
         newTopics.splice(index, 1);
         setTopics(newTopics);
+        setIsEditing(isEditing.filter((i) => i !== index));
     };
 
     const handleTopicChange = (event) => {
@@ -43,11 +60,40 @@ const Topic = () => {
                 <Heading mb={6}>List of Topics</Heading>
                 {topics.map((topic, index) => (
                     <Box key={index} borderWidth="1px" borderRadius="md" p={3}>
-                        <FormControl>
-                            <FormLabel fontWeight="bold">Topic {index + 1}</FormLabel>
-                            <Input defaultValue={topic} onChange={(event) => handleEditTopic(index, event.target.value)} />
-                        </FormControl>
-                        <Button colorScheme="red" onClick={() => handleDeleteTopic(index)} mt={4}>
+                        {isEditing.includes(index) ? (
+                            <FormControl>
+                                <FormLabel fontWeight="bold">Topic {index + 1}</FormLabel>
+                                <Input
+                                    value={newTopic}
+                                    onChange={(event) => setNewTopic(event.target.value)}
+                                />
+                                <Button
+                                    colorScheme="teal"
+                                    onClick={() => handleSaveTopic(index, newTopic)}
+                                    mt={4}
+                                >
+                                    Save Topic
+                                </Button>
+                            </FormControl>
+                        ) : (
+                            <Box>
+                                <Text fontWeight="bold">Topic {index + 1}</Text>
+                                <Text>{topic}</Text>
+                            </Box>
+                        )}
+                        <Button
+                            colorScheme="teal"
+                            onClick={() => handleEditTopic(index)}
+                            mt={4}
+                        >
+                            Edit Topic
+                        </Button>
+                        <Button
+                            colorScheme="red"
+                            onClick={() => handleDeleteTopic(index)}
+                            mt={4}
+                            ml={4}
+                        >
                             Delete Topic
                         </Button>
                     </Box>

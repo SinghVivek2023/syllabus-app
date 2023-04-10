@@ -100,7 +100,7 @@ function Subject() {
                     colorScheme="gray"
                     variant="outline"
                 >
-                    Back
+                    Back to standard
                 </Button>
             </FormControl>
         </Box>

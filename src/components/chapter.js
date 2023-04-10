@@ -73,10 +73,13 @@ function Chapter() {
 
         history.push(`/topic/${standard}/${subject}/${selectedChapter}`);
     };
+    const handleBack = () => {
+        history.push(`/subject/${standard}`);
+    };
 
     return (
         <Box p={4}>
-            <Text mb={2}>
+            <Text mb={2} fontSize="lg" fontWeight="bold">
                 You selected: {standard}th Standard, {subject}
             </Text>
             <VStack align="flex-start" spacing={4}>
@@ -131,6 +134,9 @@ function Chapter() {
                         <Text>Please select a chapter.</Text>
                     </Box>
                 )}
+                <Button mt={4} colorScheme="blue" onClick={handleBack}>
+                    Back to Subject
+                </Button>
             </VStack>
         </Box>
     );
