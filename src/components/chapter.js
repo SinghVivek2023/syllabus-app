@@ -84,7 +84,7 @@ function Chapter() {
             </Text>
             <VStack align="flex-start" spacing={4}>
                 <FormControl>
-                    <FormLabel>Chapters</FormLabel>
+                    <FormLabel>List of Chapters</FormLabel>
                     <List>
                         {chapterList.map((chapter) => (
                             <ListItem
