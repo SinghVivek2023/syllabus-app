@@ -43,6 +43,11 @@ function Chapter() {
     };
 
     const handleSaveChapter = () => {
+        if (!newChapter) {
+            alert('Please enter a chapter name');
+            return;
+        }
+
         const index = chapterList.findIndex((chapter) => chapter === selectedChapter);
         if (index !== -1) {
             const updatedChapterList = [...chapterList];
@@ -61,6 +66,11 @@ function Chapter() {
     };
 
     const handleNext = () => {
+        if (!selectedChapter) {
+            alert('Please select a chapter');
+            return;
+        }
+
         history.push(`/topic/${standard}/${subject}/${selectedChapter}`);
     };
 
@@ -91,7 +101,7 @@ function Chapter() {
                         </Button>
                     </Box>
                 </FormControl>
-                {selectedChapter && (
+                {selectedChapter ? (
                     <FormControl>
                         <FormLabel>Selected Chapter: {selectedChapter}</FormLabel>
                         {isEditing ? (
@@ -116,6 +126,10 @@ function Chapter() {
                             Next
                         </Button>
                     </FormControl>
+                ) : (
+                    <Box>
+                        <Text>Please select a chapter.</Text>
+                    </Box>
                 )}
             </VStack>
         </Box>
