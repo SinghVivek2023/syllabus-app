@@ -10,15 +10,14 @@ import {
     Stack,
     Text,
 } from '@chakra-ui/react';
+import standards from '../data/standards'; // import the standards array
 
-interface StandardProps { }
-
-const Standard: React.FC<StandardProps> = () => {
+const Standard = () => {
     const history = useHistory();
     const [selectedStandard, setSelectedStandard] = useState('');
     const [error, setError] = useState('');
 
-    const handleStandardChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleStandardChange = (event) => {
         const selectedValue = event.target.value;
         setSelectedStandard(selectedValue);
     };
@@ -37,16 +36,12 @@ const Standard: React.FC<StandardProps> = () => {
                 <Stack spacing={4}>
                     <FormLabel>Select Standard</FormLabel>
                     <Select placeholder="Select" value={selectedStandard} onChange={handleStandardChange}>
-                        <option value="1">1st</option>
-                        <option value="2">2nd</option>
-                        <option value="3">3rd</option>
-                        <option value="4">4th</option>
-                        <option value="5">5th</option>
-                        <option value="6">6th</option>
-                        <option value="7">7th</option>
-                        <option value="8">8th</option>
-                        <option value="9">9th</option>
-                        <option value="10">10th</option>
+                        {/* Generate the options dynamically */}
+                        {standards.map((standard) => (
+                            <option key={standard.id} value={standard.id}>
+                                {standard.name}
+                            </option>
+                        ))}
                     </Select>
                     {error && <FormHelperText color="red.500">{error}</FormHelperText>}
                     {selectedStandard && (

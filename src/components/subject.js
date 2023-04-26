@@ -9,6 +9,7 @@ import {
     Text,
     useToast,
 } from '@chakra-ui/react';
+import subjects from '../data/subjects';
 
 function Subject() {
     const history = useHistory();
@@ -71,9 +72,13 @@ function Subject() {
                     value={selectedSubject}
                     onChange={handleSubjectChange}
                 >
-                    <option value="physics">Physics</option>
-                    <option value="chemistry">Chemistry</option>
-                    <option value="maths">Maths</option>
+                    {subjects
+                        .filter((subject) => subject.standardId === Number(standard))
+                        .map((subject) => (
+                            <option key={subject.id} value={subject.name}>
+                                {subject.name}
+                            </option>
+                        ))}
                 </Select>
                 {!selectedSubject && (
                     <Text mt={2} color="red">
